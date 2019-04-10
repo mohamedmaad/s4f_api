@@ -10,9 +10,9 @@ authRoute.post("/login", (req,res) => {
         // si l'user avec le mot de passe exist 
         if(user) {
             // envoyer une response avec status et email
-            res.json({status: "logged", data: req.body.email})
+            res.json({status: "loged", data: req.body.email})
             // ca c'est pour nous
-            console.log("V :", user.email, " : is logged in");
+            console.log("V :", user.email, " : is loged in");
         }
         else {
             // sinon envoyer une response avec l'erreur
