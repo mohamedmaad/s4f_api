@@ -1,39 +1,43 @@
 const mongoose = require('mongoose')
 
-let Admin = new mongoose.Schema(
+let Users = new mongoose.Schema(
     {
         firstName: {
-          type: String,
+          type: String
         },
         lastName: {
-          type: String,
+          type: String
         },
         email: {
             type: String,
             unique: true
         },
         tel: {
-            type: String,
+            type: String
         },
         password: {
-            type: String,
+            type: String
         },
         civility: {
-            type: String,
+            type: String
         },
         birthday: {
-            type: Date,
+            type: Date
         },
         adress: {
-            type: String,
+            type: String
         },
         type: {
             type: String,
             enum: ["admin", "user", "company"]
         },
         token: {
-            type: String,
-        },
+            type: String
+        }
+    },
+    {
+      collection: 'users',
+    }
 )
 
-module.exports = mongoose.model('Admin', Admin)
+module.exports = mongoose.model('Users', Users)
