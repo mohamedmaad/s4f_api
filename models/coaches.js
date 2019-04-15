@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-let Coaches = new Schema(
+let CoachSchema = new Schema(
   {
     firstName: {
       type: String,
@@ -41,4 +41,4 @@ let Coaches = new Schema(
   }
 )
 
-module.exports = mongoose.model('Coaches', Coaches)
+module.exports = mongoose.model('Coach', CoachSchema)
