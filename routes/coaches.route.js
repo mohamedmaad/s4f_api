@@ -82,7 +82,6 @@ coachesRoutes.post('/delete', (req, res) => {
     }
   })
 })
-// Defined AddCoach route
 
 // // Defined edit route
 // coachesRoutes.route('/edit/:id').get(function(req, res) {
