@@ -23,7 +23,7 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 
 
 app.use(bodyParser.json())
-let User = require('../models/users');
+let User = require('./models/users');
 
 app.post("/login", (req,res) => {
     // checker si l'user et password exist dans la base de donnees
