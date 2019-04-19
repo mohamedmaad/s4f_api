@@ -1,5 +1,5 @@
 // db.js
 
 module.exports = {
-  DB: 'mongodb://localhost:27017/S4F',
+  DB: 'mongodb+srv://root:<password>@test-fslk8.mongodb.net/test?retryWrites=true',
 }
