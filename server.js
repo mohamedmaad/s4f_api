@@ -24,6 +24,12 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use('/users', authRoute)
 app.use('/coaches', coachesRoute)
+
+app.get("/", (req, res) => {
+
+  res.send("hello!")
+})
+
 const port = process.env.PORT || 4000
 
 const server = app.listen(port, function() {
