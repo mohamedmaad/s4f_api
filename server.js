@@ -8,6 +8,8 @@ const express = require('express'),
   config = require('./db'),
   authRoute = require('./routes/auth.route')
 
+const app = express()
+app.use(cors())
 const coachesRoute = require('./routes/coaches.route')
 mongoose.Promise = global.Promise
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
@@ -19,8 +21,7 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
   }
 )
 
-const app = express()
-app.use(cors())
+
 app.use(bodyParser.json())
 app.use('/users', authRoute)
 app.use('/coaches', coachesRoute)
