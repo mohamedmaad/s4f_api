@@ -20,8 +20,8 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 )
 
 const app = express()
-app.use(bodyParser.json())
 app.use(cors())
+app.use(bodyParser.json())
 app.use('/users', authRoute)
 app.use('/coaches', coachesRoute)
 
