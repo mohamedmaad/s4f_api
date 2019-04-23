@@ -27,21 +27,22 @@ let User = require('./models/users');
 
 app.post("/login", (req,res) => {
     // checker si l'user et password exist dans la base de donnees
-    User.findOne({ email: req.body.email, password: req.body.password }, (err, user) => {
-        // si l'user avec le mot de passe exist 
-        if(user) {
-            // envoyer une response avec status et email
-            res.json({status: "loged", data: req.body.email})
-            // ca c'est pour nous
-            console.log("V :", user.email, " : is loged in");
-        }
-        else {
-            // sinon envoyer une response avec l'erreur
-            res.json({status: "error", data: req.body.email})
-            // et autre fois ca c'est pour nous
-            console.log(`X : tentative de se connecter avec ${req.body.email} et ${req.body.password}`)
-        }
-    });
+//     User.findOne({ email: req.body.email, password: req.body.password }, (err, user) => {
+//         // si l'user avec le mot de passe exist 
+//         if(user) {
+//             // envoyer une response avec status et email
+//             res.json({status: "loged", data: req.body.email})
+//             // ca c'est pour nous
+//             console.log("V :", user.email, " : is loged in");
+//         }
+//         else {
+//             // sinon envoyer une response avec l'erreur
+//             res.json({status: "error", data: req.body.email})
+//             // et autre fois ca c'est pour nous
+//             console.log(`X : tentative de se connecter avec ${req.body.email} et ${req.body.password}`)
+//         }
+//     });
+  console.log(req.body);
 });
 
 app.use('/users', authRoute)
