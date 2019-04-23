@@ -21,7 +21,7 @@ mongoose.connect('mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/S4F', { useN
   }
 )
 //////// test
-const MongoClient = require(‘mongodb’).MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/test?retryWrites=true";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
