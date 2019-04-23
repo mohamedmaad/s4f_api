@@ -12,7 +12,7 @@ const app = express()
 app.use(cors())
 const coachesRoute = require('./routes/coaches.route')
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://root:!s4froot@s4f-fslk8.mongodb.net/S4F', { useNewUrlParser: true }).then(
+mongoose.connect('mongodb://arosmed3@gmail.com:!s4froot@s4f-fslk8.mongodb.net/S4F', { useNewUrlParser: true }).then(
   () => {
     console.log('Database is connected')
   },
