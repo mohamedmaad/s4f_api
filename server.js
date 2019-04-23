@@ -20,8 +20,17 @@ mongoose.connect('mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/S4F', { useN
     console.log('Can not connect to the database' + err)
   }
 )
+//////// test
+const MongoClient = require(‘mongodb’).MongoClient;
+const uri = "mongodb+srv://root:<password>@s4f-fslk8.mongodb.net/test?retryWrites=true";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 
-
+///////// end test
 app.use(bodyParser.json())
 let User = require('./models/users');
 
