@@ -7,10 +7,10 @@ const express = require('express'),
   mongoose = require('mongoose'),
   config = require('./db'),
   authRoute = require('./routes/auth.route')
+coachesRoute = require('./routes/coaches.route')
+companyRoute = require('./routes/company.route')
+sessionRoute = require('./routes/session.route')
 
-const app = express()
-app.use(cors())
-const coachesRoute = require('./routes/coaches.route')
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/S4F', { useNewUrlParser: true }).then(
   () => {
@@ -56,12 +56,8 @@ app.post("/login", (req,res) => {
 
 app.use('/users', authRoute)
 app.use('/coaches', coachesRoute)
-
-app.get("/", (req, res) => {
-
-  res.send("hello!")
-})
-
+app.use('/company', companyRoute)
+app.use('/session', sessionRoute)
 const port = process.env.PORT || 4000
 
 const server = app.listen(port, function() {

@@ -82,7 +82,6 @@ coachesRoutes.post('/delete', (req, res) => {
     }
   })
 })
-// Defined AddCoach route
 
 // // Defined edit route
 // coachesRoutes.route('/edit/:id').get(function(req, res) {
@@ -109,14 +108,6 @@ coachesRoutes.post('/delete', (req, res) => {
 //           res.status(400).send('unable to update the database')
 //         })
 //     }
-//   })
-// })
-
-// // Defined delete | remove | destroy route
-// coachesRoutes.route('/delete/:id').get(function(req, res) {
-//   Coaches.findByIdAndRemove({ _id: req.params.id }, function(err, coaches) {
-//     if (err) res.json(err)
-//     else res.json('Successfully removed')
 //   })
 // })
 
