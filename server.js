@@ -12,7 +12,7 @@ companyRoute = require('./routes/company.route')
 sessionRoute = require('./routes/session.route')
 
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/S4F', { useNewUrlParser: true }).then(
+mongoose.connect(config.DB, { useNewUrlParser: true }).then(
   () => {
     console.log('Database is connected')
   },
@@ -20,40 +20,10 @@ mongoose.connect('mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/S4F', { useN
     console.log('Can not connect to the database' + err)
   }
 )
-//////// test
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://root:s4froot.@s4f-fslk8.mongodb.net/test?retryWrites=true";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
 
-///////// end test
+const app = express()
 app.use(bodyParser.json())
-let User = require('./models/users');
-
-app.post("/login", (req,res) => {
-    // checker si l'user et password exist dans la base de donnees
-//     User.findOne({ email: req.body.email, password: req.body.password }, (err, user) => {
-//         // si l'user avec le mot de passe exist 
-//         if(user) {
-//             // envoyer une response avec status et email
-//             res.json({status: "loged", data: req.body.email})
-//             // ca c'est pour nous
-//             console.log("V :", user.email, " : is loged in");
-//         }
-//         else {
-//             // sinon envoyer une response avec l'erreur
-//             res.json({status: "error", data: req.body.email})
-//             // et autre fois ca c'est pour nous
-//             console.log(`X : tentative de se connecter avec ${req.body.email} et ${req.body.password}`)
-//         }
-//     });
-  console.log(req.body);
-});
-
+app.use(cors())
 app.use('/users', authRoute)
 app.use('/coaches', coachesRoute)
 app.use('/company', companyRoute)
