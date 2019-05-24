@@ -9,7 +9,7 @@ const uuid = require('uuid')
 let Coaches = require('../models/coaches')
 let token = uuid.v4()
 
-// Defined store route
+// Ajout d'un coach en bdd
 coachesRoutes.post('/add', (req, res) => {
   console.log(req.body.email)
 
@@ -43,7 +43,7 @@ coachesRoutes.post('/add', (req, res) => {
   })
 })
 
-// Defined get data(index or listing) route
+// Récupérer la liste de coach
 coachesRoutes.route('/').get(function(req, res) {
   Coaches.find(function(err, coacheses) {
     if (err) {
@@ -54,6 +54,7 @@ coachesRoutes.route('/').get(function(req, res) {
   })
 })
 
+// Détail du coach
 coachesRoutes.route('/detail/:id').get(function(req, res) {
   Coaches.find({ _id: req.params.id }, (err, coach) => {
     if (err) {
@@ -64,11 +65,12 @@ coachesRoutes.route('/detail/:id').get(function(req, res) {
   })
 })
 
+// Suppression d'un coach , en bdd
 coachesRoutes.post('/delete', (req, res) => {
   Coaches.find({ _id: req.body.id }, (err, coach) => {
     if (coach) {
-      Coaches.findOneAndDelete({ _id: req.body.id }, (err, r) => {
-        if (res) {
+      Coaches.findOneAndDelete({ _id: req.body.id }, (err, c) => {
+        if (c) {
           console.log('coach delete : ', req.body.id)
           res.status(200).json({ status: 'coach deleted', data: req.body.id })
         } else {
@@ -83,32 +85,56 @@ coachesRoutes.post('/delete', (req, res) => {
   })
 })
 
-// // Defined edit route
-// coachesRoutes.route('/edit/:id').get(function(req, res) {
-//   let id = req.params.id
-//   Coaches.findById(id, function(err, coaches) {
-//     res.json(coaches)
-//   })
-// })
+// Récupérer le coach que l'on veut modifier et l'editer
+coachesRoutes.route('/edit/:id').get(function(req, res) {
+  Coaches.find({ _id: req.params.id }, (err, coach) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.json(coach)
+    }
+  })
+})
 
-// //  Defined update route
-// coachesRoutes.route('/update/:id').post(function(req, res) {
-//   Coaches.findById(req.params.id, function(err, next, coaches) {
-//     if (!coaches) return next(new Error('Could not load Document'))
-//     else {
-//       coaches.coach_firstname = req.body.coach_firstname
-//       coaches.coach_name = req.body.coach_name
+//  Modifier coach
 
-//       coaches
-//         .save()
-//         .then(coaches => {
-//           res.json('Update complete')
-//         })
-//         .catch(err => {
-//           res.status(400).send('unable to update the database')
-//         })
-//     }
-//   })
-// })
+coachesRoutes.post('/edit/:id', (req, res) => {
+  console.log(req.body.email)
+
+  Coaches.find({ _id: req.body.id }, (err, coach) => {
+    if (coach) {
+      Coaches.findOneAndUpdate({ _id: req.body.id }, (err, r) => {
+        if (res) {
+          res.status(400).json({ status: 'can not modify', data: req.body })
+        } else {
+          let coaches = new Coaches({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            birthday: req.body.dateOfBirth,
+            civility: req.body.civility,
+            speciality: req.body.speciality,
+            company: req.body.company,
+            email: req.body.email,
+            tel: req.body.tel,
+          })
+          console.log(req.body)
+          coaches.save((err, coach) => {
+            if (coach) {
+              res.status(200).json({ status: 'coach updated', data: req.body })
+            }
+            if (err) {
+              res
+                .status(400)
+                .json({ status: 'coach update error', data: req.body })
+            }
+          })
+        }
+      })
+    } else {
+      console.log('coach : ', req.body.id, " n'a pas été modifié")
+      res.status(404).json({ status: 'coach not update', data: req.body.id })
+    }
+  })
+})
 
 module.exports = coachesRoutes
