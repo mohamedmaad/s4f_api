@@ -80,4 +80,44 @@ companyRoutes.post('/delete', (req, res) => {
   })
 })
 
+// Récupérer l'entreprise que l'on veut modifier et l'editer
+companyRoutes.route('/edit/:id').get(function(req, res) {
+  Company.find({ _id: req.params.id }, (err, coach) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.json(coach)
+    }
+  })
+})
+
+//  Soumettre la modifier du coach et l'enregistrer en BDD
+companyRoutes.post('/update/:id', (req, res) => {
+  console.log(req.body.email)
+
+  Company.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        name: req.body.name,
+        activity: req.body.activity,
+        employees: req.body.employees,
+        address: req.body.address,
+        email: req.body.email,
+        tel: req.body.tel,
+      },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Doesn't work")
+      }
+      console.log(doc)
+      res.status(200).json({ status: 'company updated', data: req.body.id })
+    }
+  )
+  console.log(req.body)
+  console.log(req.params.id)
+})
+
 module.exports = companyRoutes

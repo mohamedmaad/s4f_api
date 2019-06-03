@@ -96,45 +96,36 @@ coachesRoutes.route('/edit/:id').get(function(req, res) {
   })
 })
 
-//  Modifier coach
+//  Soumettre la modifier du coach et l'enregistrer en BDD
 
-coachesRoutes.post('/edit/:id', (req, res) => {
+coachesRoutes.post('/update/:id', (req, res) => {
   console.log(req.body.email)
 
-  Coaches.find({ _id: req.body.id }, (err, coach) => {
-    if (coach) {
-      Coaches.findOneAndUpdate({ _id: req.body.id }, (err, r) => {
-        if (res) {
-          res.status(400).json({ status: 'can not modify', data: req.body })
-        } else {
-          let coaches = new Coaches({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            birthday: req.body.dateOfBirth,
-            civility: req.body.civility,
-            speciality: req.body.speciality,
-            company: req.body.company,
-            email: req.body.email,
-            tel: req.body.tel,
-          })
-          console.log(req.body)
-          coaches.save((err, coach) => {
-            if (coach) {
-              res.status(200).json({ status: 'coach updated', data: req.body })
-            }
-            if (err) {
-              res
-                .status(400)
-                .json({ status: 'coach update error', data: req.body })
-            }
-          })
-        }
-      })
-    } else {
-      console.log('coach : ', req.body.id, " n'a pas été modifié")
-      res.status(404).json({ status: 'coach not update', data: req.body.id })
+  Coaches.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        birthday: req.body.dateOfBirth,
+        civility: req.body.civility,
+        speciality: req.body.speciality,
+        company: req.body.company,
+        email: req.body.email,
+        tel: req.body.tel,
+      },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Doesn't work")
+      }
+      console.log(doc)
+      res.status(200).json({ status: 'coach updated', data: req.body.id })
     }
-  })
+  )
+  console.log(req.body)
+  console.log(req.params.id)
 })
 
 module.exports = coachesRoutes

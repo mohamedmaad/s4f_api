@@ -85,4 +85,48 @@ sessionRoutes.post('/delete', (req, res) => {
     }
   })
 })
+
+// Récupérer la séance que l'on veut modifier et l'editer
+sessionRoutes.route('/edit/:id').get(function(req, res) {
+  Session.find({ _id: req.params.id }, (err, coach) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.json(coach)
+    }
+  })
+})
+
+//  Soumettre la modification de la séance et l'enregistrer en BDD
+
+sessionRoutes.post('/update/:id', (req, res) => {
+  console.log(req.body.email)
+
+  Session.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        date: req.body.date,
+        duration: req.body.duration,
+        timeSession: req.body.timeSession,
+        minParticipant: req.body.minParticipant,
+        maxParticipant: req.body.maxParticipant,
+        company: req.body.company,
+        coach: req.body.coach,
+        sport: req.body.sport,
+      },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) {
+        console.log("Doesn't work")
+      }
+      console.log(doc)
+      res.status(200).json({ status: 'session updated', data: req.body.id })
+    }
+  )
+  console.log(req.body)
+  console.log(req.params.id)
+})
+
 module.exports = sessionRoutes
